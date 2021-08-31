@@ -1,17 +1,29 @@
 package com.teste.haexagonal.application.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "TB_CUSTOMER")
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    String birthDate;
+    private String birthDate;
+
+    public Customer(String xzx, String sadas) {
+    }
 }
