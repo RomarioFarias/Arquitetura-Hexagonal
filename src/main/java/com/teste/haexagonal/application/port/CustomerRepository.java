@@ -10,6 +10,8 @@ public interface CustomerRepository {
 
     List<Customer> findAll();
 
+    Customer findById(Long id);
+
     void deleteCustomer(Long id);
 
     Customer updateCustomer(Customer customer);

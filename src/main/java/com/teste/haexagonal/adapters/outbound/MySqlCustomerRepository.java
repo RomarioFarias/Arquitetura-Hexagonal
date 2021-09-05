@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Component
@@ -24,6 +25,11 @@ public class MySqlCustomerRepository implements CustomerRepository {
     @Override
     public List<Customer> findAll() {
         return springDataCustomerRepository.findAll();
+    }
+
+    @Override
+    public Customer findById(Long id) {
+        return springDataCustomerRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
