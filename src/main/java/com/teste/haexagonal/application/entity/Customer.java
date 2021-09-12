@@ -1,10 +1,7 @@
 package com.teste.haexagonal.application.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,6 +9,7 @@ import javax.persistence.*;
 @Table(name = "TB_CUSTOMER")
 @Setter
 @Getter
+@With
 @NoArgsConstructor
 @AllArgsConstructor
 public class Customer {

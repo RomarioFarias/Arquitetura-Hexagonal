@@ -1,16 +1,22 @@
 package com.teste.haexagonal.adapters.inbound;
 
+import com.teste.haexagonal.application.port.CustomerService;
+import com.teste.haexagonal.template.CustomerTestTemplate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -19,15 +25,20 @@ class CustomerControllerTest {
 
     @Autowired
     MockMvc mockMvc;
-
-    private final String url = "/v1/customer/";
+    @MockBean
+    private CustomerService customerService;
+    private final String URL_CUSTOMER = "/v1/customer/";
 
     @Test
-    public void findAllCustomer() throws Exception {
-        mockMvc.perform(get(url + "listAllCustomer").contentType(MediaType.APPLICATION_JSON))
+    void findAllCustomer() throws Exception {
+        when(customerService.listAllCustomer()).thenReturn(CustomerTestTemplate.getListCustomerTemplate());
+
+        mockMvc.perform(get(URL_CUSTOMER + "listAllCustomer").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(MockMvcResultMatchers.status().is(200));
-                //.andExpect(MockMvcResultMatchers.jsonPath("$[0].name").isNotEmpty());
+                .andExpect(status().is(200))
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].name").isNotEmpty());
     }
 
 }

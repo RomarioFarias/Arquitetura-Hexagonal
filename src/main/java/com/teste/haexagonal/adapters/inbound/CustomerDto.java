@@ -1,11 +1,13 @@
 package com.teste.haexagonal.adapters.inbound;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
+@With
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerDto {
 
     Long id;
