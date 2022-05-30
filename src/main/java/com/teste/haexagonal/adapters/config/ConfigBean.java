@@ -1,6 +1,7 @@
 package com.teste.haexagonal.adapters.config;
 
 import com.teste.haexagonal.HaexagonalApplication;
+import com.teste.haexagonal.adapters.outbound.CustomerModalMapper;
 import com.teste.haexagonal.adapters.inbound.CustomerController;
 import com.teste.haexagonal.adapters.inbound.CustomerMapper;
 import com.teste.haexagonal.application.entity.Customer;
@@ -17,10 +18,17 @@ public class ConfigBean {
 
 
     @Bean
+    ModelMapper modelMapper (){
+        return new ModelMapper();
+    }
+
+    @Bean
+    CustomerServiceImpl customerServiceImpl(CustomerRepository customerRepository, CustomerModalMapper customerModalMapper) {
     ModelMapper toModal() {
         return new ModelMapper();
     }
 
+        return new CustomerServiceImpl(customerRepository,customerModalMapper);
     @Bean
     CustomerServiceImpl customerServiceImpl(CustomerRepository customerRepository, CustomerMapper customerMapper) {
         Customer customer = new Customer();
@@ -30,6 +38,8 @@ public class ConfigBean {
         return new CustomerServiceImpl(customerRepository,customerMapper);
 
     }
+
+
 
 
 //    @Bean

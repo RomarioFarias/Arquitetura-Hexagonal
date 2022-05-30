@@ -1,12 +1,15 @@
 package com.teste.haexagonal.application.service;
 
 import com.teste.haexagonal.adapters.inbound.CustomerDto;
+import com.teste.haexagonal.adapters.outbound.CustomerModalMapper;
 import com.teste.haexagonal.adapters.inbound.CustomerMapper;
 import com.teste.haexagonal.application.entity.Customer;
 import com.teste.haexagonal.application.port.CustomerRepository;
 import com.teste.haexagonal.application.port.CustomerService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -16,11 +19,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
 
-    private  CustomerRepository customerRepository;
-    private  CustomerMapper customerMapper;
+    private CustomerRepository customerRepository;private  CustomerMapper customerMapper;
 
-
+    private CustomerModalMapper modelMapper;
     @Override
+    public Customer insertCustomer(CustomerDto customerDto) {
+        var as = modelMapper.toCustomer(customerDto);
+        return customerRepository.save(this.convertCostumer(customerDto));
     public Customer insertCustomer(Customer customer) {
         return this.customerRepository.save(customer);
     }
@@ -42,6 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> listAllCustomer() {
+
         return customerRepository.findAll();
     }
 
